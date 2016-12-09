@@ -4,6 +4,7 @@
   "description": "A database for use with IFTTT to help it remember information and make it smarter",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo 'No tests'"
   },
   "repository": {
