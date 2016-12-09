@@ -1,0 +1,39 @@
+{
+  "name": "ifttt-db",
+  "version": "1.0.0",
+  "description": "A database for use with IFTTT to help it remember information and make it smarter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'No tests'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oliver-spryn/ifttt-db.git"
+  },
+  "keywords": [
+    "IFTTT",
+    "Database",
+    "IFTTT",
+    "DB",
+    "IFTTT",
+    "Database",
+    "DB",
+    "Internet",
+    "of",
+    "Things",
+    "IoT",
+    "Automation"
+  ],
+  "author": "Oliver Spryn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oliver-spryn/ifttt-db/issues"
+  },
+  "homepage": "https://github.com/oliver-spryn/ifttt-db#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "firebase": "^3.6.2",
+    "request": "^2.79.0"
+  }
+}
