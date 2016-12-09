@@ -111,11 +111,91 @@ app.get('/api/v1/:guid/run', (req, res) => {
 						reason: body,
 						result: 'failure'
 					});
-				})
-			break;
+				});
+				
+				break;
 			
 			default:
 				next();
+				break;
+		}
+	});
+});
+
+app.post('/api/v1/:guid/run', (req, res) => {
+    db.ref('/' + req.params.guid).once('value', (snapshot) => {
+		let task = snapshot.val();
+		if (task == null) return next();
+		let value = null;
+		
+		switch(task.type.toLowerCase()) {
+			case 'toggle':
+				if(req.body.value == null || req.body.value == '') {
+					res.status(500).json({
+						reason: 'No data was sent',
+						result: 'failure'
+					});
+					
+					return;
+				}
+				
+				value = parseInt(req.body.value);
+				
+				if(isNaN(value)) {
+					res.status(500).json({
+						reason: 'The value is not a number',
+						result: 'failure'
+					});
+					
+					return;
+				}
+			
+				db.ref('/' + req.params.guid).child('value')
+				.set(value = value % 2)
+				.then(() => {
+					// Good, will report out after calling the IFTTT service in the next switch statement
+				})
+				.catch((error) => {
+					res.status(500).json({
+						reason: error,
+						result: 'failure'
+					});
+					
+					return;
+				});
+				
+				break;
+				
+			default:
+				return next();
+				break;
+		}
+		
+		switch(task.type.toLowerCase()) {
+			case 'toggle':
+				let url = task.entries[value].url;
+				
+				request(url, (error, response, body) => {
+					if (!error && response.statusCode == 200) {
+						res.json({
+							result: 'success'
+						});
+						
+						return;
+					}
+					
+					res.status(response.statusCode).json({
+						reason: body,
+						result: 'failure'
+					});
+					
+					return;
+				});
+				
+				break;
+			
+			default:
+				return next();
 				break;
 		}
 	});
