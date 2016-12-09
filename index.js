@@ -43,30 +43,10 @@ app.post('/api/v1/:guid', (req, res) => {
 		
 		switch(task.type.toLowerCase()) {
 			case 'toggle':
-				let value = null;
-				
-				if(req.body.value == null || req.body.value == '') {
-					res.status(500).json({
-						reason: 'No data was sent',
-						result: 'failure'
-					});
-					
-					return;
-				}
-				
-				value = parseInt(req.body.value);
-				
-				if(isNaN(value)) {
-					res.status(500).json({
-						reason: 'The value is not a number',
-						result: 'failure'
-					});
-					
-					return;
-				}
+				let value = parseInt(task.value);
 			
 				db.ref('/' + req.params.guid).child('value')
-				.set(value % 2)
+				.set((value + 1) % 2)
 				.then(() => {
 					res.json({
 						result: 'success'
@@ -126,32 +106,12 @@ app.post('/api/v1/:guid/run', (req, res) => {
     db.ref('/' + req.params.guid).once('value', (snapshot) => {
 		let task = snapshot.val();
 		if (task == null) return next();
-		let value = null;
+		let value = parseInt(task.value);
 		
 		switch(task.type.toLowerCase()) {
-			case 'toggle':
-				if(req.body.value == null || req.body.value == '') {
-					res.status(500).json({
-						reason: 'No data was sent',
-						result: 'failure'
-					});
-					
-					return;
-				}
-				
-				value = parseInt(req.body.value);
-				
-				if(isNaN(value)) {
-					res.status(500).json({
-						reason: 'The value is not a number',
-						result: 'failure'
-					});
-					
-					return;
-				}
-			
+			case 'toggle':			
 				db.ref('/' + req.params.guid).child('value')
-				.set(value = value % 2)
+				.set(value = ((value + 1) % 2))
 				.then(() => {
 					// Good, will report out after calling the IFTTT service in the next switch statement
 				})
