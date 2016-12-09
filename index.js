@@ -7,11 +7,11 @@ let request = require('request');
 
 // Initialize the server and database
 let config = {
-	apiKey: process.env.IFTTT_DB_API_KEY,// 'AIzaSyAL09TnvpGURe4ulCpcocs_fNM3ZUmb_DU',
-	authDomain: process.env.IFTTT_DB_AUTH_DOMAIN, //'ifttt-database.firebaseapp.com',
-	databaseURL: process.env.IFTTT_DB_DATABASE_URL, //'https://ifttt-database.firebaseio.com',
-	messagingSenderId: process.env.IFTTT_DB_MSG_SENDER_ID, //'945115589864',
-	storageBucket: process.env.IFTTT_DB_STORAGE_BUCKET // 'ifttt-database.appspot.com'
+	apiKey: process.env.IFTTT_DB_API_KEY,
+	authDomain: process.env.IFTTT_DB_AUTH_DOMAIN,
+	databaseURL: process.env.IFTTT_DB_DATABASE_URL,
+	messagingSenderId: process.env.IFTTT_DB_MSG_SENDER_ID,
+	storageBucket: process.env.IFTTT_DB_STORAGE_BUCKET
 };
 
 firebase.initializeApp(config);
